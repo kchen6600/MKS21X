@@ -34,9 +34,7 @@ public class Book{
 	this.ISBN = ISBN;
     }
 
-    public void toString(){
-	System.out.println(title);
-	System.out.println("By: "+author);
-	System.out.println("ISBN: "+ISBN);
+    public String toString(){
+	return title+"\nBy: "+author+"\nISBN: "+ISBN;
     }
 }
