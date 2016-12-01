@@ -44,7 +44,7 @@ public class CirculatingBook extends LibraryBook{
     }
 
     public String toString(){
-	return super.toString()+circulationStatus();
+	return super.toString();
     }
 
 
