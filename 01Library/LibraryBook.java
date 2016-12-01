@@ -1,42 +1,34 @@
-public class Book{
-    private String author, title, ISBN;
+abstract Class LibraryBook extends Book implements Comparable<LibraryBook>{
+    private String callNumber;
     
-    public Book(){
-    }
-
-    public Book(String author, String title, String ISBN){
-	this.author = author;
-	this.title = title;
-	this.ISBN = ISBN;
+    public LibraryBook(String author, String title, String ISBN, String callNumber){
+        super(author, title, ISBN);
+	this.callNumber = callNumber;
     }
     
-    public String getAuthor(){
-	return author;
+    public String getCallNumber(){
+	return callNumber;
+    }
+   
+
+    public void setCallNumber(String callNumber){
+	this.callNumber = callNumber;
+    }
+
+    abstract void checkout(String patron, String due){
+    }
+
+    abstract void returned(){
+    }
+
+    abstract String circulationStatus(){
+    }
+
+    public int compareTo(LibraryBook book){
+	return callNumber.compareTo(book.getCallNumber());
     }
     
-    public String getTitle(){
-	return title;
-    }
-    
-    public String getISBN(){
-	return ISBN;
-    }
-
-    public void setAuthor(String author){
-	this.author = author;
-    }
-
-    public void setTitle(String title){
-	this.title = title;
-    }
-
-    public void setISBN(String ISBN){
-	this.ISBN = ISBN;
-    }
-
-    public void toString(){
-	System.out.println(title);
-	System.out.println("By: "+author);
-	System.out.println("ISBN: "+ISBN);
+    public String toString(){
+	return super.toString()+"\nCirculation Status: "+circulationStatus()+"\nCall Number: "+callNumber;
     }
 }
