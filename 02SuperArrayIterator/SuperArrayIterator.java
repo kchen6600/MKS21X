@@ -3,15 +3,17 @@ import java.util.*;
 public class SuperArrayIterator implements Iterator<String>{
     private int current;
     private SuperArray superarr;
-    public SuperArrayIterator(SuperArray sa){
+    
+    public SuperArrayIterator(SuperArray superarr){
 	current = 0;
-	superarr = sa;
+	this.superarr = superarr;
     }
        
     public String next(){
 	if (hasNext()){
-	    return superarr[current];
+	    String currentstr = superarr.get(current);
 	    current++;
+	    return currentstr;
 	}
 	else{
 	    throw new NoSuchElementException();
@@ -19,7 +21,7 @@ public class SuperArrayIterator implements Iterator<String>{
     }
 
     public boolean hasNext(){
-	return current+1 < superarr.size();
+	return current < superarr.size();
     }
 
     public void remove(){
