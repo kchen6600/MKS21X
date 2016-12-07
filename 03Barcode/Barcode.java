@@ -9,18 +9,38 @@ public class Barcode implements Comparable<Barcode>{
 //               or zip contains a non digit
 //               _zip and _checkDigit are initialized.
   public Barcode(String zip) {
-	}
+      if (zip.length != 5){
+	  throw new IllegalArgumentException("Zip is not the right length.");
+      }
+      for (int i = 0; i < 5; i++){
+	  if(zip.charAt(i) ){
+	      throw new IllegalArgumentException("Zip can only be a 5 digit number.");
+	  }
+      }
+      _zip = zip;
+      _checkDigit = checkSum();
+  }
 
 // postcondition: Creates a copy of a bar code.
-  public Barcode clone(Barcode x){}
+  public Barcode clone(){
+      Barcode bc = new Barcode(_zip);
+      return bc;
+  }
 
 
 // postcondition: computes and returns the check sum for _zip
-  private int checkSum(){}
+  private int checkSum(){
+      int sum = 0;
+      for (int i = 0; i < _zip.length; i++){
+	  sum += Integer.parseInt(_zip.charAt(i));
+      }
+      return sum % 10;
+  }
 
 //postcondition: format zip + check digit + Barcode 
 //ex. "084518  |||:::|::|::|::|:|:|::::|||::|:|"      
-  public String toString(){}
+  public String toString(){
+  }
 
 
 // postcondition: compares the zip + checkdigit, in numerical order. 
