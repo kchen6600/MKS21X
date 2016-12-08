@@ -13,12 +13,12 @@ public class Barcode implements Comparable<Barcode>{
 	  throw new IllegalArgumentException("Zip is not the right length.");
       }
       for (int i = 0; i < 5; i++){
-	  if(zip.charAt(i) ){
+	  if(!isDigit(zip.charAt(i))){
 	      throw new IllegalArgumentException("Zip can only be a 5 digit number.");
 	  }
       }
       _zip = zip;
-      _checkDigit = checkSum();
+      _checkDigit = checkSum() % 10;
   }
 
 // postcondition: Creates a copy of a bar code.
@@ -34,17 +34,54 @@ public class Barcode implements Comparable<Barcode>{
       for (int i = 0; i < _zip.length; i++){
 	  sum += Integer.parseInt(_zip.charAt(i));
       }
-      return sum % 10;
+      return sum;
   }
 
 //postcondition: format zip + check digit + Barcode 
 //ex. "084518  |||:::|::|::|::|:|:|::::|||::|:|"      
   public String toString(){
+      String str = _zip + _checkDigit + " |";
+      for (int i = 0; i < _zip.length(); i++){
+	  char ch = _zip.charAt(i);
+	  if (ch == '1'){
+	      str += ":::||";
+	  }
+	  else if (ch == '2'){
+	      str += "::|:|";
+	  }
+	  else if (ch == '3'){
+	      str += "::||:";
+	  }
+	  else if (ch == '4'){
+	      str += ":|::|";
+	  }
+	  else if (ch == '5'){
+	      str += ":|:|:";
+	  }
+	  else if (ch == '6'){
+	      str += ":||::";
+	  }
+	  else if (ch == '7'){
+	      str += "|:::|";
+	  }
+	  else if (ch == '8'){
+	      str += "|::|:";
+	  }
+	  else if (ch == '9'){
+	      str += "|:|::";
+	  }
+	  else{
+	      str += "||:::";
+	  }
+      }
+	      
   }
 
 
 // postcondition: compares the zip + checkdigit, in numerical order. 
-  public int compareTo(Barcode other){}
+  public int compareTo(Barcode other){
+      return (Integer.valueOf(_zip + _checkDigit)).compareTo(Integer.valueOf(Other._zip + other._checkDigit));
+  }
     
 }
 
