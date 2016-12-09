@@ -39,7 +39,7 @@ public class Barcode implements Comparable<Barcode>{
 
 //postcondition: format zip + check digit + Barcode 
 //ex. "084518  |||:::|::|::|::|:|:|::::|||::|:|"      
-  public String toString(){
+  public String toCode(){
       String str = _zip + _checkDigit + " |";
       for (int i = 0; i < _zip.length(); i++){
 	  char ch = _zip.charAt(i);
@@ -77,6 +77,12 @@ public class Barcode implements Comparable<Barcode>{
 	      
   }
 
+    public String toString() {
+	toCode();
+    }
+
+    public String toZip{
+    }
 
 // postcondition: compares the zip + checkdigit, in numerical order. 
   public int compareTo(Barcode other){
