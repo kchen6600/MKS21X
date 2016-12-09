@@ -2,7 +2,7 @@ public class Barcode implements Comparable<Barcode>{
 // instance variables
    private String _zip;
    private int _checkDigit;
-    private static String[] bars = {"||:::",":::||","::|:|","::||:",":|::|",":|:|:",":||::","|:::|","|::|:","|:|::"};
+   private static String[] bars = {"||:::",":::||","::|:|","::||:",":|::|",":|:|:",":||::","|:::|","|::|:","|:|::"};
 
 // constructors
 //precondition: _zip.length() = 5 and zip contains only digits.
@@ -89,12 +89,14 @@ public class Barcode implements Comparable<Barcode>{
     }
 
     public String toZip(String code){
-	str = "";
+	String str = "";
+	int currentlength = str.length();
 	if (code.length() == 32){
 	    for (int i = 1; i < code.length() - 5; i+=5){
 		for (int j = 0; j < bars.length; j++){
 		    if(code.substring(i, i+5) == bars[j]){
 			str += j;
+			currentlength +=1;
 		    }
 		}
 	    }
