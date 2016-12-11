@@ -26,8 +26,8 @@ public class Barcode implements Comparable<Barcode>{
 // postcondition: computes and returns the check sum for _zip
   private int checkSum(){
       int sum = 0;
-      for (int i = 0; i < _zip.length; i++){
-	  sum += Integer.parseInt(_zip.charAt(i));
+      for (int i = 0; i < _zip.length(); i++){
+	  sum += _zip.charAt(i)- '0';
       }
       return sum;
   }
@@ -36,7 +36,7 @@ public class Barcode implements Comparable<Barcode>{
 //ex. "084518  |||:::|::|::|::|:|:|::::|||::|:|"      
   public String toCode(String zip){
       
-      String str = _zip + _checkDigit + " |";
+      String str = _zip + _checkDigit + "|";
       if (zip.length() == 5){
       for (int i = 0; i < zip.length(); i++){
 	  char ch = zip.charAt(i);
@@ -67,7 +67,7 @@ public class Barcode implements Comparable<Barcode>{
 	  else if (ch == '9'){
 	      str += "|:|::";
 	  }
-	  else if (ch == '0'{
+	  else if (ch == '0'){
 	      str += "||:::";
 	  }
 	  else{
@@ -85,31 +85,51 @@ public class Barcode implements Comparable<Barcode>{
   }
 
     public String toString() {
-	return _zip +" "+ toCode();
+	String str = _zip + _checkDigit + " |";
+	for (int i = 0; i <= _zip.length(); i++){
+	    str += bars[(_zip + _checkDigit).charAt(i)-'0'];
+	}
+	return str + "|";
+    }
+
+    private static int verifySum(String code){
+	int sum = 0;
+	for (int i = 0; i < code.length() - 4; i +=5){
+	    sum += scheme(code.substring(i, i+5));
+	}
+	return sum;
+    }
+    
+    private static int scheme(String str){
+	for (int i = 0; i < bars.length; i++){
+	    if (bars[i].equals(str)){
+		return i;
+	    }
+	}
+	throw new IllegalArgumentException("Encoded ints are invalid and non-barcode characters can not be used.");
     }
 
     public String toZip(String code){
 	String str = "";
-	int currentlength = str.length();
-	if (code.length() == 32){
-	    for (int i = 1; i < code.length() - 5; i+=5){
-		for (int j = 0; j < bars.length; j++){
-		    if(code.substring(i, i+5) == bars[j]){
-			str += j;
-			currentlength +=1;
-		    }
-		}
-	    }
-	}
-	else{
+	if (code.length() != 32){
 	    throw new IllegalArgumentException("Barcode must be 32 characters.");
 	}
+	else if (code.charAt(0) != '|' || code.charAt(code.length() - 1) != '|'){
+	    throw new IllegalArgumentException("Barcode must begin and end with |.");
+	}
+	else if ((verifySum(code.substring(1, 26)) % 10) != (scheme(code.substring(26, 31)))){
+	    throw new IllegalArgumentException("Checksum is invalid.");
+	}
+	for (int i = 1; i < code.length() - 6; i+=5){
+	    str += scheme(code.substring(i, i +5));
+	}
+	return str;
 	
     }
 
 // postcondition: compares the zip + checkdigit, in numerical order. 
   public int compareTo(Barcode other){
-      return (Integer.valueOf(_zip + _checkDigit)).compareTo(Integer.valueOf(Other._zip + other._checkDigit));
+      return (Integer.valueOf(_zip + _checkDigit)).compareTo(Integer.valueOf(other._zip + other._checkDigit));
   }
     
 }
