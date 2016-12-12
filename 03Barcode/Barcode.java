@@ -34,10 +34,11 @@ public class Barcode implements Comparable<Barcode>{
 
 //postcondition: format zip + check digit + Barcode 
 //ex. "084518  |||:::|::|::|::|:|:|::::|||::|:|"      
-  public String toCode(String zip){
+  public static String toCode(String zip){
       
-      String str = _zip + _checkDigit + "|";
+      String str = "|";
       if (zip.length() == 5){
+	  
       for (int i = 0; i < zip.length(); i++){
 	  char ch = zip.charAt(i);
 	  if (ch == '1'){
@@ -109,7 +110,7 @@ public class Barcode implements Comparable<Barcode>{
 	throw new IllegalArgumentException("Encoded ints are invalid and non-barcode characters can not be used.");
     }
 
-    public String toZip(String code){
+    public static String toZip(String code){
 	String str = "";
 	if (code.length() != 32){
 	    throw new IllegalArgumentException("Barcode must be 32 characters.");
