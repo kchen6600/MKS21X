@@ -39,6 +39,24 @@ public class Sorts{
 	}			
     }
 
+    public static void bubbleSort(int[] data){
+	int temp;
+	int saved;
+	boolean swap = true;
+	while (swap){
+	    swap = false;
+	    for (int index = 0; index < data.length-1; index++){
+		if (data[index] > data[index+1]){
+		    saved = data[index];
+		    temp = data[index+1];
+		    data[index] = temp;
+		    data[index+1] = saved;
+		    swap = true;
+		}
+	    }
+	}
+    }
+
     private static String arrayToString(int[]data){
 	String str = "[";
 	
@@ -57,6 +75,21 @@ public class Sorts{
 	int[] test2 = {0, 1, 9, 7, 2};
 	insertionSort(test2);
 	System.out.println(arrayToString(test2));
+	int[] test3 = {1, 8, 3, 4, 0};
+	bubbleSort(test3);
+	System.out.println(arrayToString(test3));
+	int[] emptytest = {};
+	//selectionSort(emptytest);
+	//insertionSort(emptytest);
+	bubbleSort(emptytest);
+	System.out.println(arrayToString(emptytest));
+	int[] test4 = { 1,};
+	//selectionSort(test4);
+	//insertionSort(test4);
+	bubbleSort(test4);
+	System.out.println(arrayToString(test4));
+         
+	
     }
 	
 
